@@ -312,8 +312,8 @@ async def _slash_kill(ctx):
 @bot.slash_command(name="gamerule")
 async def _slash_gamerule(
     ctx,
-    gamerule: Option(str,"",required=True),
-    value: Option(str,"",required=True),
+    gamerule: Option(str,required=True),
+    value: Option(str,required=True),
     ):
   await ctx.respond(f"ゲームルール {gamerule} が {value} に設定されました")
 
