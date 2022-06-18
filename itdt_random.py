@@ -186,7 +186,7 @@ async def _slash_random_dan(
     name="sl_random", 
     description="低速難易度表から1曲ランダムに表示します。"
     )        
-async def _slash_random(
+async def _slash_sl_random(
     ctx, 
     level: Option(str,"難易度を指定します(空欄で全曲)",required=False)
     ):
