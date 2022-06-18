@@ -11,10 +11,12 @@ intents = discord.Intents.default()
 intents.members = True
 
 db_url = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUvZ_D6sEfXNsiMRLXHsvQSGf1Ir/exec"
-
+db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHrN_eRWh5PoM_n4mLbNuBrddwfcrkxA7WNcPg2b8_MLA/exec"
 res = requests.get(db_url)
+res_sl = requests.get(db_url_sl)
 
 song_db = json.loads(res.text)
+song_db_sl = json.loads(res_sl.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -180,16 +182,50 @@ async def _slash_random_dan(
         embed.add_field(name="URL", value=urls[3], inline=True)
         await ctx.respond(embed=embed)
 
+@bot.slash_command(
+    name="sl_random", 
+    description="低速難易度表から1曲ランダムに表示します。"
+    )        
+async def _slash_random(
+    ctx, 
+    level: Option(str,"難易度を指定します(空欄で全曲)",required=False)
+    ):
+    error = False
+    fnlevel = None
+    if level:
+        print('not empty')
+        if level not in ["1","2","3","4","5","6","7","9","10"]:
+            print('not defined')
+            embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
+            await ctx.respond(embed=embed_err)
+            error = True
+        else:
+            while fnlevel != level:
+                #print('searching')
+                rnd = random.randrange(len(song_db_sl))
+                fnlevel = song_db_sl[rnd]['level'] 
+    else:
+        rnd = random.randrange(len(song_db))
+    if  error != True:
+        title = song_db_sl[rnd]['title'].replace('_','\_')
+        chlevel = song_db_sl[rnd]['level']
+        url = song_db_sl[rnd]['url']
+        embed=discord.Embed(title="ランダム選曲(低速難易度表)", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="$" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
 @bot.event
 async def on_ready():
     print('log in')
     loop.start()
-    activity = discord.Activity(name='アイドルマスター シンデレラガールズ スターライトステージ', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='ITDTの譜面', type=discord.ActivityType.playing)
     await bot.change_presence(activity=activity)
 
 @tasks.loop(seconds=60)
 async def loop():
-    print('roop')
+    print('loop')
     now = datetime.now().strftime('%H:%M')
     if now == '04:00':
         res = requests.get(db_url)
