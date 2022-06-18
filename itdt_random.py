@@ -153,12 +153,14 @@ async def _slash_random_nd(
 
 async def _slash_random_dan(
     ctx, 
-    dan: Option(str,"段位を指定します。(ビギナー,初段～十段,皆伝,Overjoy)",required=True)
+    dan: Option(str,"段位を指定します。(ビギナー,初段～十段,皆伝,Overjoy)",required=True),
+    duplication : Option (bool,"曲被りの有無を指定します。(空欄でTrue(被りあり))",default=True)
     ):
     error = False
     titles = ["","","",""]
     chlevels = [-1,-1,-1,-1]
     urls = ["","","",""]
+    chartnum = [0,0,0,0]
     fnlevel = None
     if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable"]:
             print('not defined')
@@ -172,11 +174,14 @@ async def _slash_random_dan(
                 rnd = random.randrange(len(song_db))
                 if song_db[rnd]['level'] in ["???","(^^)"]:
                     fnlevel = 101
+                elif duplication == False and rnd in chartnum:
+                    fnlevel = 777
                 else:
                     fnlevel = int(song_db[rnd]['level'])
             titles[i] = song_db[rnd]['title'].replace('_','\_')
             chlevels[i] = song_db[rnd]['level']
             urls[i] = song_db[rnd]['url']
+            chartnum[i] = rnd
         embed=discord.Embed(title="ランダム段位")
         embed.add_field(name="1曲目", value="★" + chlevels[0] + " " + titles[0], inline=False)
         embed.add_field(name="URL", value=urls[0], inline=True)
