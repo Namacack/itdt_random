@@ -12,11 +12,15 @@ intents.members = True
 
 db_url = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUvZ_D6sEfXNsiMRLXHsvQSGf1Ir/exec"
 db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHrN_eRWh5PoM_n4mLbNuBrddwfcrkxA7WNcPg2b8_MLA/exec"
+db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
+
 res = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
+res_lg = requests.get(db_url_lg)
 
 song_db = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
+song_db_lg = json.loads(res_lg.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -37,6 +41,7 @@ dan_level = {
     "皆伝":[19,19,19,20],
     "Overjoy":[20,20,20,21],
     "Undefined":[21,22,23,24],
+    "Unplayable":[99,99,99,99]
 }
 
 @bot.slash_command(
@@ -155,7 +160,7 @@ async def _slash_random_dan(
     chlevels = [-1,-1,-1,-1]
     urls = ["","","",""]
     fnlevel = None
-    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined"]:
+    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された段位は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -214,6 +219,42 @@ async def _slash_sl_random(
         embed=discord.Embed(title="ランダム選曲(低速難易度表)", color=0xff8080)
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="$" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
+@bot.slash_command(
+    name="lg_random", 
+    description="長尺・短尺まとめ表から1曲ランダムに表示します。"
+    )        
+async def _slash_lg_random(
+    ctx, 
+    level: Option(str,"難易度を指定します(空欄で全曲)",required=False)
+    ):
+    error = False
+    fnlevel = None
+    if level:
+        print('not empty')
+        if level not in ["__","-5","-4","-3","-2","-1","0","1","2","3","4","5","6","7","8","9","10"]:
+            print('not defined')
+            embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
+            await ctx.respond(embed=embed_err)
+            error = True
+        else:
+            while fnlevel != level:
+                #print('searching')
+                rnd = random.randrange(len(song_db_lg))
+                fnlevel = song_db_lg[rnd]['level'] 
+    else:
+        rnd = random.randrange(len(song_db_lg))
+    if  error != True:
+        title = song_db_lg[rnd]['title'].replace('_','\_')
+        chlevel = song_db_lg[rnd]['level']
+        time = song_db_lg[rnd]['time']
+        url = song_db_lg[rnd]['url']
+        embed=discord.Embed(title="ランダム選曲(長尺・短尺まとめ表)", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="長" + chlevel, inline=False)
+        embed.add_field(name="演奏時間", value=time, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
