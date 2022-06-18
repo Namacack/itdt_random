@@ -153,7 +153,11 @@ async def _slash_random_nd(
 
 async def _slash_random_dan(
     ctx, 
-    dan: Option(str,"段位を指定します。(ビギナー,初段～十段,皆伝,Overjoy)",required=True),
+    dan: Option(
+        str,
+        "段位を指定します。(ビギナー,初段～十段,皆伝,Overjoy)",
+        required=True,
+        autocomplete=discord.utils.basic_autocomplete(["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy"]),),
     duplication : Option (bool,"曲被りの有無を指定します。(空欄でTrue(被りあり))",default=True)
     ):
     error = False
