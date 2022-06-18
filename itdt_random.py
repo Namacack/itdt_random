@@ -297,7 +297,6 @@ async def _slash_st_random(
     if  error != True:
         title = song_db_st[rnd]['title'].replace('_','\_')
         chlevel = song_db_st[rnd]['level']
-        time = song_db_st[rnd]['time']
         url = song_db_st[rnd]['url']
         embed=discord.Embed(title="ランダム選曲(長複合難易度表)", color=0xff8080)
         embed.add_field(name="曲名", value=title, inline=False)
