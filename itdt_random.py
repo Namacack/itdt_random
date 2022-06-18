@@ -205,7 +205,7 @@ async def _slash_sl_random(
                 rnd = random.randrange(len(song_db_sl))
                 fnlevel = song_db_sl[rnd]['level'] 
     else:
-        rnd = random.randrange(len(song_db))
+        rnd = random.randrange(len(song_db_sl))
     if  error != True:
         title = song_db_sl[rnd]['title'].replace('_','\_')
         chlevel = song_db_sl[rnd]['level']
