@@ -36,6 +36,7 @@ dan_level = {
     "十段":[17,17,17,18],
     "皆伝":[19,19,19,20],
     "Overjoy":[20,20,20,21],
+    "Undefined":[21,22,23,24],
 }
 
 @bot.slash_command(
@@ -154,7 +155,7 @@ async def _slash_random_dan(
     chlevels = [-1,-1,-1,-1]
     urls = ["","","",""]
     fnlevel = None
-    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy"]:
+    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された段位は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -216,6 +217,10 @@ async def _slash_sl_random(
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
+@bot.slash_command(name="kill")
+async def _slash_kill(ctx):
+  await ctx.respond(f"{ctx.author}は奈落の底へ落ちた")
+
 @bot.event
 async def on_ready():
     print('log in')
@@ -240,6 +245,6 @@ async def loop():
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="★" + chlevel, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
-        await channel.respond(embed=embed)
+        await channel.send(embed=embed)
 
 bot.run(TOKEN)
