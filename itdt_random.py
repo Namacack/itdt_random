@@ -13,14 +13,17 @@ intents.members = True
 db_url = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUvZ_D6sEfXNsiMRLXHsvQSGf1Ir/exec"
 db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHrN_eRWh5PoM_n4mLbNuBrddwfcrkxA7WNcPg2b8_MLA/exec"
 db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
+db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
 
 res = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
 res_lg = requests.get(db_url_lg)
+res_st = requests.get(db_url_st)
 
 song_db = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
 song_db_lg = json.loads(res_lg.text)
+song_db_st = json.loads(res_st.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -267,9 +270,52 @@ async def _slash_lg_random(
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
+@bot.slash_command(
+    name="st_random", 
+    description="長複合難易度表から1曲ランダムに表示します。"
+    )        
+async def _slash_st_random(
+    ctx, 
+    level: Option(str,"難易度を指定します(空欄で全曲)",required=False)
+    ):
+    error = False
+    fnlevel = None
+    if level:
+        print('not empty')
+        if level not in ["2","3","4","5","6","7","8","9","11","12","13","14","15","16","17","18","19","20"]:
+            print('not defined')
+            embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
+            await ctx.respond(embed=embed_err)
+            error = True
+        else:
+            while fnlevel != level:
+                #print('searching')
+                rnd = random.randrange(len(song_db_st))
+                fnlevel = song_db_st[rnd]['level'] 
+    else:
+        rnd = random.randrange(len(song_db_st))
+    if  error != True:
+        title = song_db_st[rnd]['title'].replace('_','\_')
+        chlevel = song_db_st[rnd]['level']
+        time = song_db_st[rnd]['time']
+        url = song_db_st[rnd]['url']
+        embed=discord.Embed(title="ランダム選曲(長複合難易度表)", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="◆" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
 @bot.slash_command(name="kill")
 async def _slash_kill(ctx):
   await ctx.respond(f"{ctx.author}は奈落の底へ落ちた")
+
+@bot.slash_command(name="gamerule")
+async def _slash_gamerule(
+    ctx,
+    gamerule: Option(str,"",required=True),
+    value: Option(str,"",required=True),
+    ):
+  await ctx.respond(f"ゲームルール {gamerule} が {value} に設定されました")
 
 @bot.event
 async def on_ready():
