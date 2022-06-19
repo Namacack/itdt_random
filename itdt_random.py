@@ -325,9 +325,9 @@ async def on_ready():
 
 @tasks.loop(seconds=60)
 async def loop():
-    now = datetime.now().strftime('%H:%M')
+    now = datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%H:%M')
     print(f"loop:{now}")
-    if now == '10:15':
+    if now == '10:20':
         res = requests.get(db_url)
         song_db = json.loads(res.text)
         print('songdb reloaded')
