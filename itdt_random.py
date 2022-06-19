@@ -328,7 +328,7 @@ async def on_ready():
 async def loop():
     now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime('%H:%M')
     print(f"loop:{now}")
-    if now == '10:20':
+    if now == '04:00':
         res = requests.get(db_url)
         song_db = json.loads(res.text)
         print('songdb reloaded')
