@@ -1,5 +1,6 @@
 import json
 import time
+from zoneinfo import ZoneInfo
 import requests
 import discord
 import random
@@ -325,7 +326,7 @@ async def on_ready():
 
 @tasks.loop(seconds=60)
 async def loop():
-    now = datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%H:%M')
+    now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime('%H:%M')
     print(f"loop:{now}")
     if now == '10:20':
         res = requests.get(db_url)
