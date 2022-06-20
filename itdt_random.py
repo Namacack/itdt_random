@@ -48,6 +48,12 @@ dan_level = {
     "Unplayable":[99,99,99,99]
 }
 
+options = {
+    0:["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly",],
+    1:["x3 Scroll","x4 Scroll","Shuffle","G.Judge H","Reg.Speed"],
+    2:["Stealth","G.Judge A","PlaySpeed","JudgeRange"]
+}
+
 @bot.slash_command(
     name="random", 
     description="難易度表から1曲ランダムに表示します。"
@@ -80,6 +86,60 @@ async def _slash_random(
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="★" + chlevel, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
+@bot.slash_command(
+    name="random_with_option", 
+    description="難易度表から1曲とプレイオプションをランダムに表示します。"
+    )        
+async def _slash_random_with_option(
+    ctx, 
+    level: Option(str,"難易度を指定します(空欄で全曲)",required=False),
+    illegular: Option(int,"数が大きいほどマニアック・高難易度なオプションが出現します。(0~2の範囲で入力 空欄で0)",default=0)
+    ):
+    error = False
+    fnlevel = None
+    option_list = options[0]
+    if level:
+        print('not empty')
+        if level not in ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]:
+            print('not defined')
+            embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
+            await ctx.respond(embed=embed_err)
+            error = True
+        else:
+            while fnlevel != level:
+                #print('searching')
+                rnd = random.randrange(len(song_db))
+                fnlevel = song_db[rnd]['level'] 
+    else:
+        rnd = random.randrange(len(song_db))
+    if illegular > 2:
+        embed_err=discord.Embed(title="エラー", description="illegularは0~2の範囲で入力してください。", color=0xff8080)
+        await ctx.respond(embed=embed_err)
+        error = True
+    elif illegular >= 1:
+        option_list.extend(options[1])
+        if illegular == 2:
+            option_list.extend(options[2])
+        rnd_option = random.randrange(len(option_list))
+        tmp_option = options[rnd_option]
+        if tmp_option == "Reg.Speed" : tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
+        if tmp_option == "PlaySpeed" : tmp_option += (":" + str(round(random.uniform(0.25, 4.0),2)))
+        if tmp_option == "JudgeRange":
+            tmp_option += (":[" + 
+            str(20 + ( 5 * (random.randrange(1,16)))) + "," + 
+            str(40 + ( 10 * (random.randrange(1,16)))) + "," +
+            str(80 + ( 20 * (random.randrange(1,16)))) + "]" )
+    if error != True:
+        title = song_db[rnd]['title'].replace('_','\_')
+        chlevel = song_db[rnd]['level']
+        url = song_db[rnd]['url']
+        embed=discord.Embed(title="ランダム選曲(オプション付き)", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="★" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        embed.add_field(name="オプション", value=tmp_option, inline=False)
         await ctx.respond(embed=embed)
 
 @bot.command(
@@ -190,7 +250,7 @@ async def _slash_random_dan(
             chlevels[i] = song_db[rnd]['level']
             urls[i] = song_db[rnd]['url']
             chartnum[i] = rnd
-        embed=discord.Embed(title="ランダム段位")
+        embed=discord.Embed(title="ランダム段位", color=0xff8080)
         embed.add_field(name="1曲目", value="★" + chlevels[0] + " " + titles[0], inline=False)
         embed.add_field(name="URL", value=urls[0], inline=True)
         embed.add_field(name="2曲目", value="★" + chlevels[1] + " " + titles[1], inline=False)
@@ -200,6 +260,8 @@ async def _slash_random_dan(
         embed.add_field(name="4曲目", value="★" + chlevels[3] + " " + titles[3], inline=False)
         embed.add_field(name="URL", value=urls[3], inline=True)
         await ctx.respond(embed=embed)
+
+#ここから下は特殊難易度表ランダム
 
 @bot.slash_command(
     name="sl_random", 
@@ -327,11 +389,19 @@ async def on_ready():
 @tasks.loop(seconds=60)
 async def loop():
     now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime('%H:%M')
-    print(f"loop:{now}")
-    if now == '04:00':
+    #print(f"loop:{now}")
+    if now == '00:00':
+
         res = requests.get(db_url)
+        res_sl = requests.get(db_url_sl)
+        res_lg = requests.get(db_url_lg)
+        res_st = requests.get(db_url_st)
         song_db = json.loads(res.text)
+        song_db_sl = json.loads(res_sl.text)
+        song_db_lg = json.loads(res_lg.text)
+        song_db_st = json.loads(res_st.text)
         print('songdb reloaded')
+
         rnd = random.randrange(len(song_db))
         channel = bot.get_channel(987348863641878528)
         title = song_db[rnd]['title']
