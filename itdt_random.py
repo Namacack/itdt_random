@@ -114,14 +114,15 @@ async def _slash_random_with_option(
                 fnlevel = song_db[rnd]['level'] 
     else:
         rnd = random.randrange(len(song_db))
-    if illegular > 2:
+    if -1 < illegular < 2:
         embed_err=discord.Embed(title="エラー", description="illegularは0~2の範囲で入力してください。", color=0xff8080)
         await ctx.respond(embed=embed_err)
         error = True
-    elif illegular >= 1:
-        option_list.extend(options[1])
-        if illegular == 2:
-            option_list.extend(options[2])
+    else:
+        if illegular >= 1:
+            option_list.extend(options[1])
+            if illegular == 2:
+                option_list.extend(options[2])
         rnd_option = random.randrange(len(option_list))
         tmp_option = options[rnd_option]
         if tmp_option == "Reg.Speed" : tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
