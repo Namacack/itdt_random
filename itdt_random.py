@@ -391,7 +391,7 @@ async def on_ready():
 async def loop():
     now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime('%H:%M')
     #print(f"loop:{now}")
-    if now == '00:05':
+    if now == '00:00':
 
         res = requests.get(db_url)
         res_sl = requests.get(db_url_sl)
