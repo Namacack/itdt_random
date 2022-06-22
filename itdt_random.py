@@ -100,6 +100,7 @@ async def _slash_random_with_option(
     error = False
     fnlevel = None
     option_list = options[0]
+    tmp_option = ""
     if level:
         print('not empty')
         if level not in ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]:
