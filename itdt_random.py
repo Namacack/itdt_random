@@ -129,9 +129,9 @@ async def _slash_random_with_option(
         if tmp_option == "PlaySpeed" : tmp_option += (":" + str(round(random.uniform(0.25, 4.0),2)))
         if tmp_option == "JudgeRange":
             tmp_option += (":[" + 
-            str(20 + ( 5 * (random.randrange(1,16)))) + "," + 
-            str(40 + ( 10 * (random.randrange(1,16)))) + "," +
-            str(80 + ( 20 * (random.randrange(1,16)))) + "]" )
+            str(20 + ( 5 * (random.randrange(1,12)))) + "," + 
+            str(40 + ( 10 * (random.randrange(1,12)))) + "," +
+            str(80 + ( 20 * (random.randrange(1,12)))) + "]" )
     if error != True:
         title = song_db[rnd]['title'].replace('_','\_')
         chlevel = song_db[rnd]['level']
