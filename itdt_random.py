@@ -114,7 +114,7 @@ async def _slash_random_with_option(
                 fnlevel = song_db[rnd]['level'] 
     else:
         rnd = random.randrange(len(song_db))
-    if -1 < illegular < 2:
+    if not (-1 > illegular < 2):
         embed_err=discord.Embed(title="エラー", description="illegularは0~2の範囲で入力してください。", color=0xff8080)
         await ctx.respond(embed=embed_err)
         error = True
