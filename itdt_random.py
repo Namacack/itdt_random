@@ -124,7 +124,7 @@ async def _slash_random_with_option(
             if illegular == 2:
                 option_list.extend(options[2])
         rnd_option = random.randrange(len(option_list))
-        tmp_option = options[rnd_option]
+        tmp_option = option_list[rnd_option]
         if tmp_option == "Reg.Speed" : tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
         if tmp_option == "PlaySpeed" : tmp_option += (":" + str(round(random.uniform(0.25, 4.0),2)))
         if tmp_option == "JudgeRange":
