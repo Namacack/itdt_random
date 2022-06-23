@@ -57,8 +57,8 @@ dan_level = {
 options = [
     ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly","PlaySpeed(Easy)"],
     ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed","PlaySpeed","JudgeRange"],
-    ["x4 Scroll","Stealth","JudgeRandge(S-Random)"],
-    ["G.Judge A","PlaySpeed(Hard)","JudgeRandge(Hard)"]
+    ["x4 Scroll","Stealth","JudgeRange(S-Random)"],
+    ["G.Judge A","PlaySpeed(Hard)","JudgeRange(Hard)"]
     ]
     #3:
 
@@ -145,25 +145,6 @@ async def _slash_random_with_option(
             print(option_list)
             rnd_option = random.randrange(len(option_list))
             tmp_option = option_list[rnd_option]
-            if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
-            if tmp_option == "PlaySpeed(Easy)" : tmp_option += (":" + str(round(random.uniform(0.25, 1),2)))
-            if tmp_option == "PlaySpeed" :       tmp_option += (":" + str(round(random.uniform(1, 1.5),2)))
-            if tmp_option == "PlaySpeed(Hard)" : tmp_option += (":" + str(round(random.uniform(1.5, 4.0),1)))
-            if tmp_option == "JudgeRange":
-                tmp_option += (":[" + 
-                str(50 +  ( 5  * (random.randrange(1,4)))) + "," + 
-                str(100 + ( 10 * (random.randrange(1,4)))) + "," +
-                str(200 + ( 20 * (random.randrange(1,4)))) + "]" )
-            if tmp_option == "JudgeRange(Hard)":
-                tmp_option += (":[" + 
-                str(20 +  ( 5  * (random.randrange(1,6)))) + "," + 
-                str(40 +  ( 10 * (random.randrange(1,6)))) + "," +
-                str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
-            if tmp_option == "JudgeRange(S-Random)":
-                tmp_option += (":[" + 
-                str(random.randrange(1,1000)) + "," + 
-                str(random.randrange(1,1000))  + "," +
-                str(random.randrange(1,1000))  + "]" )    
         else:
             if option_select not in all_random_options:
                 embed_err=discord.Embed(title="エラー", description="指定されたオプションは存在しないか、ランダム要素がありません。", color=0xff8080)
@@ -171,6 +152,25 @@ async def _slash_random_with_option(
                 error = True
             else:
                 tmp_option = option_select
+        if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
+        if tmp_option == "PlaySpeed(Easy)" : tmp_option += (":" + str(round(random.uniform(0.25, 1),2)))
+        if tmp_option == "PlaySpeed" :       tmp_option += (":" + str(round(random.uniform(1, 1.5),2)))
+        if tmp_option == "PlaySpeed(Hard)" : tmp_option += (":" + str(round(random.uniform(1.5, 4.0),1)))
+        if tmp_option == "JudgeRange":
+            tmp_option += (":[" + 
+            str(50 +  ( 5  * (random.randrange(1,4)))) + "," + 
+            str(100 + ( 10 * (random.randrange(1,4)))) + "," +
+            str(200 + ( 20 * (random.randrange(1,4)))) + "]" )
+        if tmp_option == "JudgeRange(Hard)":
+            tmp_option += (":[" + 
+            str(20 +  ( 5  * (random.randrange(1,6)))) + "," + 
+            str(40 +  ( 10 * (random.randrange(1,6)))) + "," +
+            str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
+        if tmp_option == "JudgeRange(S-Random)":
+            tmp_option += (":[" + 
+            str(random.randrange(1,1000)) + "," + 
+            str(random.randrange(1,1000))  + "," +
+            str(random.randrange(1,1000))  + "]" )    
     if error != True:
         title = song_db[rnd]['title'].replace('_','\_')
         chlevel = song_db[rnd]['level']
