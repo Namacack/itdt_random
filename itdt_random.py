@@ -51,10 +51,12 @@ dan_level = {
 }
 
 options = [
-    ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly"],
-    ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed"],
-    ["x4 Scroll","Stealth","PlaySpeed","JudgeRange"]]
-    #3:["G.Judge A"]
+    ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly","PlaySpeed(Easy)"],
+    ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed","PlaySpeed","JudgeRange"],
+    ["x4 Scroll","Stealth","JudgeRandge(S-Random)"],
+    ["G.Judge A","PlaySpeed(Hard)","JudgeRandge(Hard)"]
+    ]
+    #3:
 
 @bot.slash_command(
     name="random", 
@@ -98,11 +100,11 @@ async def _slash_random_with_option(
     ctx, 
     level: Option(str,"難易度を指定します(空欄で全曲)",required=False),
     illegular: Option(int,"数が大きいほどマニアック・高難易度なオプションが出現します。(0~2の範囲で入力 空欄で0)",default=0)
+    #option_select: Option(str,"オプションを直接設定することができます。",default=0)
     ):
     error = False
     fnlevel = None
-    option_list = copy.copy(options[0])
-    print(option_list)
+    option_list = copy.copy(options)
     if level:
         print('not empty')
         if level not in ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]:
@@ -122,23 +124,31 @@ async def _slash_random_with_option(
         await ctx.respond(embed=embed_err)
         error = True
     else:
-        print(option_list)
         if illegular >= 1:
             option_list.extend(options[1])
-            print(option_list)
             if illegular == 2:
                 option_list.extend(options[2])
-                print(option_list)
-        print(option_list)
         rnd_option = random.randrange(len(option_list))
         tmp_option = option_list[rnd_option]
-        if tmp_option == "Reg.Speed" : tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
-        if tmp_option == "PlaySpeed" : tmp_option += (":" + str(round(random.uniform(0.25, 4.0),2)))
+        if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
+        if tmp_option == "PlaySpeed(Easy)" : tmp_option += (":" + str(round(random.uniform(0.25, 1),2)))
+        if tmp_option == "PlaySpeed" :       tmp_option += (":" + str(round(random.uniform(1, 1.5),2)))
+        if tmp_option == "PlaySpeed(Hard)" : tmp_option += (":" + str(round(random.uniform(1.5, 4.0),1)))
         if tmp_option == "JudgeRange":
             tmp_option += (":[" + 
-            str(20 + ( 5 * (random.randrange(1,12)))) + "," + 
-            str(40 + ( 10 * (random.randrange(1,12)))) + "," +
-            str(80 + ( 20 * (random.randrange(1,12)))) + "]" )
+            str(50 +  ( 5  * (random.randrange(1,4)))) + "," + 
+            str(100 + ( 10 * (random.randrange(1,4)))) + "," +
+            str(200 + ( 20 * (random.randrange(1,4)))) + "]" )
+        if tmp_option == "JudgeRange(Hard)":
+            tmp_option += (":[" + 
+            str(20 +  ( 5  * (random.randrange(1,6)))) + "," + 
+            str(40 +  ( 10 * (random.randrange(1,6)))) + "," +
+            str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
+        if tmp_option == "JudgeRandge(S-Random)":
+            tmp_option += (":[" + 
+            str(random.randrange(1,1000)) + "," + 
+            str(random.randrange(1,1000))  + "," +
+            str(random.randrange(1,1000))  + "]" )    
     if error != True:
         title = song_db[rnd]['title'].replace('_','\_')
         chlevel = song_db[rnd]['level']
