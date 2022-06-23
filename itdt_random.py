@@ -101,6 +101,7 @@ async def _slash_random_with_option(
     fnlevel = None
     option_list = None
     option_list = options[0]
+    print(options[0])
     print(option_list)
     if level:
         print('not empty')
