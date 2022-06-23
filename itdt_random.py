@@ -34,7 +34,7 @@ bot = discord.Bot(intents=intents)
 
 all_levels = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]
 
-all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRandge(S-Random)","PlaySpeed(Hard)","JudgeRandge(Hard)"]
+all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRange(S-Random)","PlaySpeed(Hard)","JudgeRange(Hard)"]
 
 dan_level = {
     "ビギナー":[0,0,0,1],
