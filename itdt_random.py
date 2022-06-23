@@ -1,12 +1,14 @@
-import json
-import time
-from zoneinfo import ZoneInfo
-import requests
+import copy
 import discord
+import json
 import random
+import requests
+import time
+
 from datetime import datetime 
 from discord.commands import Option
 from discord.ext import tasks
+from zoneinfo import ZoneInfo
 
 intents = discord.Intents.default()
 intents.members = True
@@ -99,7 +101,7 @@ async def _slash_random_with_option(
     ):
     error = False
     fnlevel = None
-    option_list = options[0].copy
+    option_list = copy.copy(options[0])
     print(option_list)
     if level:
         print('not empty')
