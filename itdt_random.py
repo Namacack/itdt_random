@@ -57,8 +57,8 @@ dan_level = {
 options = [
     ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly","PlaySpeed(Easy)"],
     ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed","PlaySpeed","JudgeRange"],
-    ["x4 Scroll","Stealth"],
-    ["G.Judge A","PlaySpeed(Hard)","JudgeRange(Hard)"]
+    ["x4 Scroll","Stealth","JudgeRange(Hard)"],
+    ["G.Judge A","PlaySpeed(Hard)"]
     ]
     #3:
 
@@ -425,7 +425,7 @@ async def _slash_leveljudge(
     chart: Option(str,required=True)
     ):
     level = all_levels[random.randrange(len(all_levels))]
-    await ctx.respond(f"{chart}は★{level}です。")
+    await ctx.respond(f"{chart} は★{level}です。")
 
 @bot.event
 async def on_ready():
