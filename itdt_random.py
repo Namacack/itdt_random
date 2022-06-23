@@ -111,7 +111,7 @@ async def _slash_random_with_option(
     ):
     error = False
     fnlevel = None
-    option_list = copy.copy(options)
+    option_list = copy.copy(options[0])
     if level:
         print('not empty')
         if level not in all_levels:
