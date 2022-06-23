@@ -132,12 +132,17 @@ async def _slash_random_with_option(
         error = True
     else:
         if not option_select:
+            print(option_list)
             if illegular >= 1:
                 option_list.extend(options[1])
+                print(option_list)
                 if illegular >= 2:
                     option_list.extend(options[2])
+                    print(option_list)
                     if illegular == 3:
                         option_list.extend(options[3])
+                        print(option_list)
+            print(option_list)
             rnd_option = random.randrange(len(option_list))
             tmp_option = option_list[rnd_option]
             if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
