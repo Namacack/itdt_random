@@ -99,6 +99,7 @@ async def _slash_random_with_option(
     ):
     error = False
     fnlevel = None
+    option_list = None
     option_list = options[0]
     print(option_list)
     if level:
