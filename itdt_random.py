@@ -48,12 +48,11 @@ dan_level = {
     "Unplayable":[99,99,99,99]
 }
 
-options = {
-    0:["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly"],
-    1:["x3 Scroll","Shuffle","G.Judge H","Reg.Speed"],
-    2:["x4 Scroll","Stealth","PlaySpeed","JudgeRange"]
+options = [
+    ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly"],
+    ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed"],
+    ["x4 Scroll","Stealth","PlaySpeed","JudgeRange"]]
     #3:["G.Judge A"]
-}
 
 @bot.slash_command(
     name="random", 
