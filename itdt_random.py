@@ -49,7 +49,7 @@ dan_level = {
 }
 
 options = {
-    0:["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly",],
+    0:["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly"],
     1:["x3 Scroll","Shuffle","G.Judge H","Reg.Speed"],
     2:["x4 Scroll","Stealth","PlaySpeed","JudgeRange"]
     #3:["G.Judge A"]
@@ -100,7 +100,6 @@ async def _slash_random_with_option(
     ):
     error = False
     fnlevel = None
-    option_list.clear()
     option_list = options[0]
     print(option_list)
     if level:
