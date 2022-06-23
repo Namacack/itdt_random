@@ -417,7 +417,15 @@ async def _slash_gamerule(
     gamerule: Option(str,required=True),
     value: Option(str,required=True),
     ):
-  await ctx.respond(f"ゲームルール {gamerule} が {value} に設定されました")
+    await ctx.respond(f"ゲームルール {gamerule} が {value} に設定されました")
+
+@bot.slash_command(name="leveljudge")
+async def _slash_gamerule(
+    ctx,
+    chart: Option(str,required=True)
+    ):
+    level = all_levels[random.randrange(len(all_levels))]
+    await ctx.respond(f"{chart} は {level} です。")
 
 @bot.event
 async def on_ready():
