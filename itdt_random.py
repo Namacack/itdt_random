@@ -57,7 +57,7 @@ dan_level = {
 options = [
     ["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly","PlaySpeed(Easy)"],
     ["x3 Scroll","Shuffle","G.Judge H","Reg.Speed","PlaySpeed","JudgeRange"],
-    ["x4 Scroll","Stealth","JudgeRange(S-Random)"],
+    ["x4 Scroll","Stealth"],
     ["G.Judge A","PlaySpeed(Hard)","JudgeRange(Hard)"]
     ]
     #3:
@@ -168,8 +168,8 @@ async def _slash_random_with_option(
             str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
         if tmp_option == "JudgeRange(S-Random)":
             tmp_option += (":[" + 
-            str(random.randrange(1,1000)) + "," + 
-            str(random.randrange(1,1000))  + "," +
+            str(random.randrange(1,250)) + "," + 
+            str(random.randrange(1,500))  + "," +
             str(random.randrange(1,1000))  + "]" )    
     if error != True:
         title = song_db[rnd]['title'].replace('_','\_')
