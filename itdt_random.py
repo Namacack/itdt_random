@@ -32,6 +32,10 @@ TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
 bot = discord.Bot(intents=intents)
 
+all_levels = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]
+
+all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRandge(S-Random)","PlaySpeed(Hard)","JudgeRandge(Hard)"]
+
 dan_level = {
     "ビギナー":[0,0,0,1],
     "初段":[1,1,2,2],
@@ -70,7 +74,7 @@ async def _slash_random(
     fnlevel = None
     if level:
         print('not empty')
-        if level not in ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]:
+        if level not in all_levels:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -99,15 +103,18 @@ async def _slash_random(
 async def _slash_random_with_option(
     ctx, 
     level: Option(str,"難易度を指定します(空欄で全曲)",required=False),
-    illegular: Option(int,"数が大きいほどマニアック・高難易度なオプションが出現します。(0~2の範囲で入力 空欄で0)",default=0)
-    #option_select: Option(str,"オプションを直接設定することができます。",default=0)
+    illegular: Option(int,"数が大きいほどマニアック・高難易度なオプションが出現します。(0~3の範囲で入力 空欄で0)",default=0),
+    option_select: Option(
+        str,"更にランダム要素のあるオプションを直接設定することができます。(空欄でランダム)",
+        required=False,
+        autocomplete=discord.utils.basic_autocomplete(all_random_options))
     ):
     error = False
     fnlevel = None
     option_list = copy.copy(options)
     if level:
         print('not empty')
-        if level not in ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","99","???","(^^)"]:
+        if level not in all_levels:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -119,36 +126,46 @@ async def _slash_random_with_option(
                 fnlevel = song_db[rnd]['level'] 
     else:
         rnd = random.randrange(len(song_db))
-    if not (-1 < illegular < 3):
-        embed_err=discord.Embed(title="エラー", description="illegularは0~2の範囲で入力してください。", color=0xff8080)
+    if not (-1 < illegular < 4):
+        embed_err=discord.Embed(title="エラー", description="illegularは0~3の範囲で入力してください。", color=0xff8080)
         await ctx.respond(embed=embed_err)
         error = True
     else:
-        if illegular >= 1:
-            option_list.extend(options[1])
-            if illegular == 2:
-                option_list.extend(options[2])
-        rnd_option = random.randrange(len(option_list))
-        tmp_option = option_list[rnd_option]
-        if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
-        if tmp_option == "PlaySpeed(Easy)" : tmp_option += (":" + str(round(random.uniform(0.25, 1),2)))
-        if tmp_option == "PlaySpeed" :       tmp_option += (":" + str(round(random.uniform(1, 1.5),2)))
-        if tmp_option == "PlaySpeed(Hard)" : tmp_option += (":" + str(round(random.uniform(1.5, 4.0),1)))
-        if tmp_option == "JudgeRange":
-            tmp_option += (":[" + 
-            str(50 +  ( 5  * (random.randrange(1,4)))) + "," + 
-            str(100 + ( 10 * (random.randrange(1,4)))) + "," +
-            str(200 + ( 20 * (random.randrange(1,4)))) + "]" )
-        if tmp_option == "JudgeRange(Hard)":
-            tmp_option += (":[" + 
-            str(20 +  ( 5  * (random.randrange(1,6)))) + "," + 
-            str(40 +  ( 10 * (random.randrange(1,6)))) + "," +
-            str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
-        if tmp_option == "JudgeRandge(S-Random)":
-            tmp_option += (":[" + 
-            str(random.randrange(1,1000)) + "," + 
-            str(random.randrange(1,1000))  + "," +
-            str(random.randrange(1,1000))  + "]" )    
+        if not option_select:
+            if illegular >= 1:
+                option_list.extend(options[1])
+                if illegular >= 2:
+                    option_list.extend(options[2])
+                    if illegular == 3:
+                        option_list.extend(options[3])
+            rnd_option = random.randrange(len(option_list))
+            tmp_option = option_list[rnd_option]
+            if tmp_option == "Reg.Speed" :       tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
+            if tmp_option == "PlaySpeed(Easy)" : tmp_option += (":" + str(round(random.uniform(0.25, 1),2)))
+            if tmp_option == "PlaySpeed" :       tmp_option += (":" + str(round(random.uniform(1, 1.5),2)))
+            if tmp_option == "PlaySpeed(Hard)" : tmp_option += (":" + str(round(random.uniform(1.5, 4.0),1)))
+            if tmp_option == "JudgeRange":
+                tmp_option += (":[" + 
+                str(50 +  ( 5  * (random.randrange(1,4)))) + "," + 
+                str(100 + ( 10 * (random.randrange(1,4)))) + "," +
+                str(200 + ( 20 * (random.randrange(1,4)))) + "]" )
+            if tmp_option == "JudgeRange(Hard)":
+                tmp_option += (":[" + 
+                str(20 +  ( 5  * (random.randrange(1,6)))) + "," + 
+                str(40 +  ( 10 * (random.randrange(1,6)))) + "," +
+                str(80 +  ( 20 * (random.randrange(1,6)))) + "]" )    
+            if tmp_option == "JudgeRange(S-Random)":
+                tmp_option += (":[" + 
+                str(random.randrange(1,1000)) + "," + 
+                str(random.randrange(1,1000))  + "," +
+                str(random.randrange(1,1000))  + "]" )    
+        else:
+            if option_select not in all_random_options:
+                embed_err=discord.Embed(title="エラー", description="指定されたオプションは存在しないか、ランダム要素がありません。", color=0xff8080)
+                await ctx.respond(embed=embed_err)
+                error = True
+            else:
+                tmp_option = option_select
     if error != True:
         title = song_db[rnd]['title'].replace('_','\_')
         chlevel = song_db[rnd]['level']
