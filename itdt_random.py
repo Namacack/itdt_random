@@ -50,8 +50,9 @@ dan_level = {
 
 options = {
     0:["Normal","x2 Scroll","Doron","Turn","RedOnly","BlueOnly",],
-    1:["x3 Scroll","x4 Scroll","Shuffle","G.Judge H","Reg.Speed"],
-    2:["Stealth","G.Judge A","PlaySpeed","JudgeRange"]
+    1:["x3 Scroll","Shuffle","G.Judge H","Reg.Speed"],
+    2:["x4 Scroll","Stealth","PlaySpeed","JudgeRange"]
+    #3:["G.Judge A"]
 }
 
 @bot.slash_command(
@@ -119,10 +120,14 @@ async def _slash_random_with_option(
         await ctx.respond(embed=embed_err)
         error = True
     else:
+        print(option_list)
         if illegular >= 1:
             option_list.extend(options[1])
+            print(option_list)
             if illegular == 2:
                 option_list.extend(options[2])
+                print(option_list)
+        print(option_list)
         rnd_option = random.randrange(len(option_list))
         tmp_option = option_list[rnd_option]
         if tmp_option == "Reg.Speed" : tmp_option += (" " + str( 20 + (20 * random.randrange(1,14))))
