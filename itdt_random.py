@@ -425,7 +425,7 @@ async def _slash_leveljudge(
     chart: Option(str,required=True)
     ):
     level = all_levels[random.randrange(len(all_levels))]
-    await ctx.respond(f"{chart} は★ {level} です。")
+    await ctx.respond(f"{chart} は★{level}です。")
 
 @bot.event
 async def on_ready():
