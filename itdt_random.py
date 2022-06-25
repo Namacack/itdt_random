@@ -387,7 +387,7 @@ async def _slash_st_random(
     fnlevel = None
     if level:
         print('not empty')
-        if level not in ["2","3","4","5","6","7","8","9","11","12","13","14","15","16","17","18","19","20"]:
+        if level not in ["0","1","2","3","4","5","6","7","8","9","11","12","13","14","15","16","17","18","19","20"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -428,12 +428,6 @@ async def _slash_leveljudge(
     ):
     level = all_levels[random.randrange(len(all_levels))]
     await ctx.respond(f"{chart}は★{level}です。")
-
-@bot.slash_command(name="xsprojectfullcollection")
-async def _slash_xsprojectfullcollection(
-    ctx
-    ):
-    await ctx.respond("!p https://www.youtube.com/watch?v=GMp5AR_aLWI")
 
 @bot.event
 async def on_ready():
