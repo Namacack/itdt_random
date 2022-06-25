@@ -52,8 +52,7 @@ dan_level = {
     "Overjoy":[20,20,20,21],
     "Undefined":[21,22,23,24],
     "Unplayable":[99,99,99,99],
-    "Thinking":[101,101,101,101],
-    "Test":[24,24,24,24]
+    "Thinking":[101,101,101,101]
 }
 
 options = [
@@ -429,6 +428,12 @@ async def _slash_leveljudge(
     ):
     level = all_levels[random.randrange(len(all_levels))]
     await ctx.respond(f"{chart}は★{level}です。")
+
+@bot.slash_command(name="xsprojectfullcollection")
+async def _slash_xsprojectfullcollection(
+    ctx
+    ):
+    await ctx.respond("!p https://www.youtube.com/watch?v=GMp5AR_aLWI")
 
 @bot.event
 async def on_ready():
