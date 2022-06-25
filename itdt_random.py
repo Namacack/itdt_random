@@ -285,6 +285,7 @@ async def _slash_random_dan(
                     fnlevel =101 
                 elif duplication == False and rnd in chartnum:
                     fnlevel = 777
+                    print ("duplicated") 
                 else:
                     fnlevel = int(song_db[rnd]['level'])
             titles[i] = song_db[rnd]['title'].replace('_','\_')
@@ -292,7 +293,7 @@ async def _slash_random_dan(
             urls[i] = song_db[rnd]['url']
             chartnum[i] = rnd
             print (chartnum)
-            
+
         embed=discord.Embed(title="ランダム段位", color=0xff8080)
         embed.add_field(name="1曲目", value="★" + chlevels[0] + " " + titles[0], inline=False)
         embed.add_field(name="URL", value=urls[0], inline=True)
