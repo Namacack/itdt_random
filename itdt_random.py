@@ -272,7 +272,7 @@ async def _slash_random_dan(
     urls = ["","","",""]
     chartnum = [0,0,0,0]
     fnlevel = None
-    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable"]:
+    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable","Rush","Thinking"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された段位は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
