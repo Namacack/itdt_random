@@ -52,7 +52,6 @@ dan_level = {
     "Overjoy":[20,20,20,21],
     "Undefined":[21,22,23,24],
     "Unplayable":[99,99,99,99],
-    "Rush":[777,777,777,777],
     "Thinking":[101,101,101,101]
 }
 
@@ -272,7 +271,7 @@ async def _slash_random_dan(
     urls = ["","","",""]
     chartnum = [0,0,0,0]
     fnlevel = None
-    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable","Rush","Thinking"]:
+    if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable","Thinking"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された段位は存在しません。", color=0xff8080)
             await ctx.respond(embed=embed_err)
@@ -433,7 +432,7 @@ async def _slash_leveljudge(
 async def on_ready():
     print('log in')
     loop.start()
-    activity = discord.Activity(name='ITDTの譜面', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='★14大会', type=discord.ActivityType.watching)
     await bot.change_presence(activity=activity)
 
 @tasks.loop(seconds=60)
