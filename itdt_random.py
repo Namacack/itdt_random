@@ -52,7 +52,8 @@ dan_level = {
     "Overjoy":[20,20,20,21],
     "Undefined":[21,22,23,24],
     "Unplayable":[99,99,99,99],
-    "Thinking":[101,101,101,101]
+    "Thinking":[101,101,101,101],
+    "Test":[24,24,24,24]
 }
 
 options = [
