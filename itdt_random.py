@@ -429,11 +429,19 @@ async def _slash_leveljudge(
     level = all_levels[random.randrange(len(all_levels))]
     await ctx.respond(f"{chart}は★{level}です。")
 
+# @bot.slash_command(name="final")
+# async def _slash_final(
+#     ctx,
+#     chart: Option(str,required=True)
+#     ):
+#     level = all_levels[random.randrange(len(all_levels))]
+#     await ctx.respond(f"{chart}は★{level}です。")
+
 @bot.event
 async def on_ready():
     print('log in')
     loop.start()
-    activity = discord.Activity(name='★14大会', type=discord.ActivityType.watching)
+    activity = discord.Activity(name='ITDTの譜面', type=discord.ActivityType.playing)
     await bot.change_presence(activity=activity)
 
 @tasks.loop(seconds=60)
