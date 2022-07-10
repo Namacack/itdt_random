@@ -462,7 +462,7 @@ async def _slash_leveljudge(
 async def _slash_hard_random(
     ctx, 
     ):
-    rnd = random.randrange(len(song_db))
+    rnd = random.randrange(len(song_db_hd))
     title = song_db[rnd]['title'].replace('_','\_')
     chlevel = song_db[rnd]['level']
     url = song_db[rnd]['url']
