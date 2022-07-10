@@ -108,7 +108,7 @@ async def _slash_random_illegular(
     ):
     error = False
     fnlevel = None
-    while fnlevel in ["99","???","(^^)"]:
+    while fnlevel not in ["99","???","(^^)"]:
         #print('searching')
         rnd = random.randrange(len(song_db))
         fnlevel = song_db[rnd]['level'] 
