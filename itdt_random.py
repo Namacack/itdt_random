@@ -463,9 +463,9 @@ async def _slash_hard_random(
     ctx, 
     ):
     rnd = random.randrange(len(song_db_hd))
-    title = song_db[rnd]['title'].replace('_','\_')
-    chlevel = song_db[rnd]['level']
-    url = song_db[rnd]['url']
+    title = song_db_hd[rnd]['title'].replace('_','\_')
+    chlevel = song_db_hd[rnd]['level']
+    url = song_db_hd[rnd]['url']
     embed=discord.Embed(title="ランダム選曲", color=0xff8080)
     embed.add_field(name="曲名", value=title, inline=False)
     embed.add_field(name="難易度", value="★" + chlevel, inline=False)
