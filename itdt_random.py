@@ -454,7 +454,6 @@ async def _slash_leveljudge(
     level = all_levels[random.randrange(len(all_levels))]
     await ctx.respond(f"{chart}は★{level}です。")
 
-
 @bot.slash_command(
     name="hard_random", 
     description="難しい楽曲を1曲ランダムに表示します。"
@@ -492,7 +491,7 @@ async def _slash_hard_random(
 async def on_ready():
     print('log in')
     loop.start()
-    activity = discord.Activity(name='ITDTの譜面', type=discord.ActivityType.playing)
+    activity = discord.Activity(name='★9大会', type=discord.ActivityType.competing)
     await bot.change_presence(activity=activity)
 
 @tasks.loop(seconds=60)
