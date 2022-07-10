@@ -17,16 +17,19 @@ db_url = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUv
 db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHrN_eRWh5PoM_n4mLbNuBrddwfcrkxA7WNcPg2b8_MLA/exec"
 db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
 db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
+db_url_hd = "https://script.google.com/macros/s/AKfycbwxl8D7wKT341-3ZsQJ1XimVuHQRlYm9knjdqzR5YXdDpG4xjtVdOYGNst-yPMFN-za/exec"
 
 res = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
 res_lg = requests.get(db_url_lg)
 res_st = requests.get(db_url_st)
+res_hd = requests.get(db_url_hd)
 
 song_db = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
 song_db_lg = json.loads(res_lg.text)
 song_db_st = json.loads(res_st.text)
+song_db_hd = json.loads(res_hd.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -61,7 +64,6 @@ options = [
     ["x4 Scroll","Stealth","JudgeRange(Hard)"],
     ["G.Judge A","PlaySpeed(Hard)"]
     ]
-    #3:
 
 @bot.slash_command(
     name="random", 
@@ -92,6 +94,31 @@ async def _slash_random(
         chlevel = song_db[rnd]['level']
         url = song_db[rnd]['url']
         embed=discord.Embed(title="ランダム選曲", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="★" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
+@bot.slash_command(
+    name="random_illegular", 
+    description="難易度表のうち特殊難易度(99,???,(^^))から1曲ランダムに表示します。"
+    )        
+async def _slash_random_illegular(
+    ctx, 
+    ):
+    error = False
+    fnlevel = None
+    while fnlevel in ["99","???","(^^)"]:
+        #print('searching')
+        rnd = random.randrange(len(song_db))
+        fnlevel = song_db[rnd]['level'] 
+    else:
+        rnd = random.randrange(len(song_db))
+    if  error != True:
+        title = song_db[rnd]['title'].replace('_','\_')
+        chlevel = song_db[rnd]['level']
+        url = song_db[rnd]['url']
+        embed=discord.Embed(title="特殊難易度ランダム選曲", color=0xff8080)
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="★" + chlevel, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
@@ -428,6 +455,32 @@ async def _slash_leveljudge(
     ):
     level = all_levels[random.randrange(len(all_levels))]
     await ctx.respond(f"{chart}は★{level}です。")
+
+
+@bot.slash_command(
+    name="hard_random", 
+    description="難しい楽曲を1曲ランダムに表示します。"
+    )        
+async def _slash_hard_random(
+    ctx, 
+    ):
+    rnd = random.randrange(len(song_db))
+    title = song_db[rnd]['title'].replace('_','\_')
+    chlevel = song_db[rnd]['level']
+    url = song_db[rnd]['url']
+    embed=discord.Embed(title="ランダム選曲", color=0xff8080)
+    embed.add_field(name="曲名", value=title, inline=False)
+    embed.add_field(name="難易度", value="★" + chlevel, inline=False)
+    embed.add_field(name="URL", value=url, inline=False)
+    await ctx.respond(embed=embed)
+
+# @bot.slash_command(name="sabungen")
+# async def _slash_leveljudge(
+#     ctx,
+#     chart: Option(str,required=True)
+#     ):
+#     level = all_levels[random.randrange(len(all_levels))]
+#     await ctx.respond(f"{chart}は★{level}です。")
 
 # @bot.slash_command(name="final")
 # async def _slash_final(
