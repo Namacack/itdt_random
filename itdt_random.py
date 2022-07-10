@@ -112,8 +112,6 @@ async def _slash_random_illegular(
         #print('searching')
         rnd = random.randrange(len(song_db))
         fnlevel = song_db[rnd]['level'] 
-    else:
-        rnd = random.randrange(len(song_db))
     if  error != True:
         title = song_db[rnd]['title'].replace('_','\_')
         chlevel = song_db[rnd]['level']
