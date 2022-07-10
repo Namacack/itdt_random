@@ -491,7 +491,7 @@ async def _slash_hard_random(
 async def on_ready():
     print('log in')
     loop.start()
-    activity = discord.Activity(name='★9大会', type=discord.ActivityType.competing)
+    activity = discord.Activity(name='★9大会', type=discord.ActivityType.unknown)
     await bot.change_presence(activity=activity)
 
 @tasks.loop(seconds=60)
