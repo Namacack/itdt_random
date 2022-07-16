@@ -460,7 +460,7 @@ async def _slash_exscore(
     good:  Option(int,"可の数",required=False),
     bad:   Option(int,"不可の数",required=False),
     ):
-  await ctx.respond(f"EXSCORE:{great*2 + good - bad*2}")
+    await ctx.respond(f"EXSCORE:{great*2 + good - bad*2}")
 
 @bot.slash_command(name="kill")
 async def _slash_kill(ctx):
