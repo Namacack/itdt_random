@@ -434,6 +434,34 @@ async def _slash_st_random(
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
+
+# @bot.slash_command(
+#     name="search_title", 
+#     description="タイトルで検索して4曲表示します。"
+#     )        
+# async def _slash_search_title(
+#     ctx, 
+#     title: Option(str,"検索語句を入力します",required=False),
+#     page: Option(str,"ページ数を入力します",required=False)
+#     ):
+#     title = song_db[0]['title'].replace('_','\_')
+#     chlevel = song_db[0]['level']
+#     url = song_db[0]['url']
+#     embed=discord.Embed(title="ランダム選曲", color=0xff8080)
+#     embed.add_field(name="曲名", value=title, inline=False)
+#     embed.add_field(name="難易度", value="★" + chlevel, inline=False)
+#     embed.add_field(name="URL", value=url, inline=False)
+#     await ctx.respond(embed=embed)
+
+@bot.slash_command(name="exscore")
+async def _slash_exscore(
+    ctx,
+    great: Option(int,"良の数",required=False),
+    good:  Option(int,"可の数",required=False),
+    bad:   Option(int,"不可の数",required=False),
+    ):
+  await ctx.respond(f"EXSCORE:{great*2 + good - bad*2}は奈落の底へ落ちた")
+
 @bot.slash_command(name="kill")
 async def _slash_kill(ctx):
   await ctx.respond(f"{ctx.author}は奈落の底へ落ちた")
