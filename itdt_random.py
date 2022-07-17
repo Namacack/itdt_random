@@ -443,7 +443,7 @@ async def _slash_search_title(
     word: Option(str,"検索語句を入力します",required=False)
     ):
     error = False
-    if len(word) < 3:
+    if len(word) < 2:
         embed_err=discord.Embed(title="エラー", description="検索語句は3文字以上にしてください。", color=0xff8080)
         await ctx.respond(embed=embed_err, ephemeral=True)
         error = True
