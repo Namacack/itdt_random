@@ -460,7 +460,7 @@ async def _slash_search_title(
             title = song_db[i]['title'].replace('_','\_')
             chlevel = song_db[i]['level']
             url = song_db[i]['url']
-            embed.add_field(name=str(count) + ".", value="★" + chlevel + " " + title + "\n" + url, inline=True)
+            embed.add_field(name=str(count) + ".", value="★" + chlevel + " " + title + "\n" + url, inline=False)
             count += 1
         await ctx.respond(embed=embed)
 
