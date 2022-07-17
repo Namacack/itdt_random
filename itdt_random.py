@@ -453,7 +453,7 @@ async def _slash_search_title(
         title = song_db[i]['title'].replace('_','\_')
         chlevel = song_db[i]['level']
         url = song_db[i]['url']
-        embed.add_field(name=count + ".", value="★" + chlevel + " " + title + "\n" + url, inline=False)
+        embed.add_field(name=str(count) + ".", value="★" + chlevel + " " + title + "\n" + url, inline=False)
     await ctx.respond(embed=embed, ephemeral=True)
 
 @bot.slash_command(name="exscore")
