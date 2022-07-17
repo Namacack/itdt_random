@@ -437,25 +437,31 @@ async def _slash_st_random(
 
 @bot.slash_command(
     name="search_title", 
-    description="タイトル・差分名で検索します。"
+    description="タイトル・差分名で検索します。(3文字以上)"
     )        
 async def _slash_search_title(
     ctx, 
     word: Option(str,"検索語句を入力します",required=False)
     ):
-    found_num = []
-    for i in range(len(song_db)):
-        if word in song_db[i]['title']:
-             found_num.append(i)
-    embed=discord.Embed(title="ランダム選曲", color=0xff8080)
-    count = 1
-    for i in found_num:
-        title = song_db[i]['title'].replace('_','\_')
-        chlevel = song_db[i]['level']
-        url = song_db[i]['url']
-        embed.add_field(name=str(count) + ".", value="★" + chlevel + " " + title + "\n" + url, inline=False)
-        count += 1
-    await ctx.respond(embed=embed)
+    error = False
+    if len(word) < 3:
+        embed_err=discord.Embed(title="エラー", description="検索語句は3文字以上にしてください。", color=0xff8080)
+        await ctx.respond(embed=embed_err, ephemeral=True)
+        error = True
+    if error != True:
+        found_num = []
+        for i in range(len(song_db)):
+            if word.lower in song_db[i]['title'].lower:
+                found_num.append(i)
+        embed=discord.Embed(title="検索結果", color=0xff8080)
+        count = 1
+        for i in found_num:
+            title = song_db[i]['title'].replace('_','\_')
+            chlevel = song_db[i]['level']
+            url = song_db[i]['url']
+            embed.add_field(name=str(count) + ".", value="★" + chlevel + " " + title + "\n" + url, inline=False)
+            count += 1
+        await ctx.respond(embed=embed)
 
 @bot.slash_command(name="exscore")
 async def _slash_exscore(
