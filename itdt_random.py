@@ -451,7 +451,7 @@ async def _slash_search_title(
     if error != True:
         found_num = []
         for i in range(len(song_db)):
-            if word.lower in song_db[i]['title'].lower:
+            if word in song_db[i]['title']:
                 found_num.append(i)
         embed=discord.Embed(title="検索結果", color=0xff8080)
         count = 1
