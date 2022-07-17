@@ -403,7 +403,7 @@ async def _slash_lg_random(
 @bot.slash_command(
     name="st_random", 
     description="長複合難易度表から1曲ランダムに表示します。"
-    )        
+    )
 async def _slash_st_random(
     ctx, 
     level: Option(str,"難易度を指定します(空欄で全曲)",required=False)
@@ -433,7 +433,6 @@ async def _slash_st_random(
         embed.add_field(name="難易度", value="◆" + chlevel, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
-
 
 @bot.slash_command(
     name="search_title", 
@@ -468,9 +467,9 @@ async def _slash_search_title(
 @bot.slash_command(name="exscore")
 async def _slash_exscore(
     ctx,
-    great: Option(int,"良の数",required=False),
-    good:  Option(int,"可の数",required=False),
-    bad:   Option(int,"不可の数",required=False),
+    great: Option(int,"良の数",required=True),
+    good:  Option(int,"可の数",required=True),
+    bad:   Option(int,"不可の数",required=True),
     ):
     await ctx.respond(f"EXSCORE:{great*2 + good - bad*4}")
 
