@@ -456,7 +456,7 @@ async def _slash_search_title(
         embed=discord.Embed(title="検索結果", color=0xff8080)
         count = 1
         if not found_num:
-            embed.add_field(name="指定された語句を含む譜面が見つかりませんでした。", value= "", inline=False)
+            embed.add_field(name= "0.", value= "指定された語句を含む譜面が見つかりませんでした。", inline=False)
         for i in found_num:
             title = song_db[i]['title'].replace('_','\_')
             chlevel = song_db[i]['level']
