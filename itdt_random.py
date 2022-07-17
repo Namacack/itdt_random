@@ -80,7 +80,7 @@ async def _slash_random(
         if level not in all_levels:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
         else:
             while fnlevel != level:
@@ -143,7 +143,7 @@ async def _slash_random_with_option(
         if level not in all_levels:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
         else:
             while fnlevel != level:
@@ -154,7 +154,7 @@ async def _slash_random_with_option(
         rnd = random.randrange(len(song_db))
     if not (-1 < illegular < 4):
         embed_err=discord.Embed(title="エラー", description="illegularは0~3の範囲で入力してください。", color=0xff8080)
-        await ctx.respond(embed=embed_err)
+        await ctx.respond(embed=embed_err, ephemeral=True)
         error = True
     else:
         if not option_select:
@@ -174,7 +174,7 @@ async def _slash_random_with_option(
         else:
             if option_select not in all_random_options:
                 embed_err=discord.Embed(title="エラー", description="指定されたオプションは存在しないか、ランダム要素がありません。", color=0xff8080)
-                await ctx.respond(embed=embed_err)
+                await ctx.respond(embed=embed_err, ephemeral=True)
                 error = True
             else:
                 tmp_option = option_select
@@ -224,7 +224,7 @@ async def _slash_random_range(
     if min>max:
         print('incorrect')
         embed_err=discord.Embed(title="エラー", description="入力形式が正しくありません。", color=0xff8080)
-        await ctx.respond(embed=embed_err)
+        await ctx.respond(embed=embed_err, ephemeral=True)
         error = True
     else:
         while not(fnlevel >= min and fnlevel <= max):
@@ -263,7 +263,7 @@ async def _slash_random_nd(
         count += 1
         if count > len(song_db):
             embed_err=discord.Embed(title="エラー", description="指定されたNDの譜面が見つかりませんでした。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
             break
     if  error != True:
@@ -299,7 +299,7 @@ async def _slash_random_dan(
     if dan not in ["ビギナー","初段","二段","三段","四段","五段","六段","七段","八段","九段","十段","皆伝","Overjoy","Undefined","Unplayable","Thinking","Test"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された段位は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
     if  error != True:
         for i in range(4):
@@ -345,7 +345,7 @@ async def _slash_sl_random(
         if level not in ["1","2","3","4","5","6","7","9","10"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
         else:
             while fnlevel != level:
@@ -379,7 +379,7 @@ async def _slash_lg_random(
         if level not in ["__","-5","-4","-3","-2","-1","0","1","2","3","4","5","6","7","8","9","10"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
         else:
             while fnlevel != level:
@@ -415,7 +415,7 @@ async def _slash_st_random(
         if level not in ["0","1","2","3","4","5","6","7","8","9","11","12","13","14","15","16","17","18","19","20"]:
             print('not defined')
             embed_err=discord.Embed(title="エラー", description="指定された難易度は存在しません。", color=0xff8080)
-            await ctx.respond(embed=embed_err)
+            await ctx.respond(embed=embed_err, ephemeral=True)
             error = True
         else:
             while fnlevel != level:
@@ -463,7 +463,7 @@ async def _slash_exscore(
     good:  Option(int,"可の数",required=False),
     bad:   Option(int,"不可の数",required=False),
     ):
-    await ctx.respond(f"EXSCORE:{great*2 + good - bad*2}")
+    await ctx.respond(f"EXSCORE:{great*2 + good - bad*4}")
 
 @bot.slash_command(name="kill")
 async def _slash_kill(ctx):
