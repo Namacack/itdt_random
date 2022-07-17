@@ -13,19 +13,19 @@ from zoneinfo import ZoneInfo
 intents = discord.Intents.default()
 intents.members = True
 
-db_url = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUvZ_D6sEfXNsiMRLXHsvQSGf1Ir/exec"
+db_url    = "https://script.google.com/macros/s/AKfycbyfoaulAWtib6ixAFiqtoBc7LXGkUvZ_D6sEfXNsiMRLXHsvQSGf1Ir/exec"
 db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHrN_eRWh5PoM_n4mLbNuBrddwfcrkxA7WNcPg2b8_MLA/exec"
 db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
 db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
 db_url_hd = "https://script.google.com/macros/s/AKfycbwxl8D7wKT341-3ZsQJ1XimVuHQRlYm9knjdqzR5YXdDpG4xjtVdOYGNst-yPMFN-za/exec"
 
-res = requests.get(db_url)
+res    = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
 res_lg = requests.get(db_url_lg)
 res_st = requests.get(db_url_st)
 res_hd = requests.get(db_url_hd)
 
-song_db = json.loads(res.text)
+song_db    = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
 song_db_lg = json.loads(res_lg.text)
 song_db_st = json.loads(res_st.text)
@@ -455,6 +455,8 @@ async def _slash_search_title(
                 found_num.append(i)
         embed=discord.Embed(title="検索結果", color=0xff8080)
         count = 1
+        if not found_num:
+            embed.add_field(name="指定された語句を含む譜面が見つかりませんでした。", value= "", inline=False)
         for i in found_num:
             title = song_db[i]['title'].replace('_','\_')
             chlevel = song_db[i]['level']
@@ -508,14 +510,6 @@ async def _slash_hard_random(
     embed.add_field(name="難易度", value="★" + chlevel, inline=False)
     embed.add_field(name="URL", value=url, inline=False)
     await ctx.respond(embed=embed)
-
-# @bot.slash_command(name="sabungen")
-# async def _slash_leveljudge(
-#     ctx,
-#     chart: Option(str,required=True)
-#     ):
-#     level = all_levels[random.randrange(len(all_levels))]
-#     await ctx.respond(f"{chart}は★{level}です。")
 
 # @bot.slash_command(name="final")
 # async def _slash_final(
