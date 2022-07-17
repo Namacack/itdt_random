@@ -436,7 +436,7 @@ async def _slash_st_random(
 
 @bot.slash_command(
     name="search_title", 
-    description="タイトル・差分名で検索します。(3文字以上)"
+    description="タイトル・差分名で検索します。(2文字以上)"
     )        
 async def _slash_search_title(
     ctx, 
@@ -444,7 +444,7 @@ async def _slash_search_title(
     ):
     error = False
     if len(word) < 2:
-        embed_err=discord.Embed(title="エラー", description="検索語句は3文字以上にしてください。", color=0xff8080)
+        embed_err=discord.Embed(title="エラー", description="検索語句は2文字以上にしてください。", color=0xff8080)
         await ctx.respond(embed=embed_err, ephemeral=True)
         error = True
     if error != True:
