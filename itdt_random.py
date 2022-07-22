@@ -447,7 +447,7 @@ async def _slash_random_tornament(
     ):
     error = False
     fntournament = None
-    if id not in ["9_220722"]:
+    if id not in ["9_220723"]:
         print('not defined')
         embed_err=discord.Embed(title="エラー", description="指定された大会は存在しません。", color=0xff8080)
         await ctx.respond(embed=embed_err, ephemeral=True)
