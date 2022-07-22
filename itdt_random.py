@@ -458,9 +458,9 @@ async def _slash_random_tornament(
             rnd = random.randrange(len(song_db_tm))
             fntournament = song_db_tm[rnd]['tnmid'] 
     if  error != True:
-        title = song_db[rnd]['title'].replace('_','\_')
-        chlevel = song_db[rnd]['level']
-        url = song_db[rnd]['url']
+        title = song_db_tm[rnd]['title'].replace('_','\_')
+        chlevel = song_db_tm[rnd]['level']
+        url = song_db_tm[rnd]['url']
         embed=discord.Embed(title="ランダム選曲(" + id + ")", color=0xff8080)
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="★" + chlevel, inline=False)
