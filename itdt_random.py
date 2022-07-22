@@ -42,6 +42,8 @@ all_levels = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","
 
 all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRange(S-Random)","PlaySpeed(Hard)","JudgeRange(Hard)"]
 
+all_tournament = ["9_220722"]
+
 dan_level = {
     "ビギナー":[0,0,0,1],
     "初段":[1,1,2,2],
@@ -438,16 +440,19 @@ async def _slash_st_random(
         await ctx.respond(embed=embed)
 
 @bot.slash_command(
-    name="random_tornament", 
+    name="random_tournament", 
     description="大会IDを指定して1曲ランダムに表示します。"
     )        
-async def _slash_random_tornament(
+async def _slash_random_tournament(
     ctx, 
-    id: Option(str,"大会IDを指定します",required=True)
+    id: Option(
+        str,"大会IDを指定します",
+        required=True,
+        autocomplete=discord.utils.basic_autocomplete(all_tournament))
     ):
     error = False
     fntournament = None
-    if id not in ["9_220723"]:
+    if id not in all_tournament:
         print('not defined')
         embed_err=discord.Embed(title="エラー", description="指定された大会は存在しません。", color=0xff8080)
         await ctx.respond(embed=embed_err, ephemeral=True)
