@@ -18,18 +18,21 @@ db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHr
 db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
 db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
 db_url_hd = "https://script.google.com/macros/s/AKfycbwxl8D7wKT341-3ZsQJ1XimVuHQRlYm9knjdqzR5YXdDpG4xjtVdOYGNst-yPMFN-za/exec"
+db_url_tm = "https://script.google.com/macros/s/AKfycby4K0rbZ_tgEGx1KdKMxclT4Ht9srpsbY-dM6WjYteLSYdTpNJPFFbMBj1Svm2wkY0/exec"
 
 res    = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
 res_lg = requests.get(db_url_lg)
 res_st = requests.get(db_url_st)
 res_hd = requests.get(db_url_hd)
+res_tm = requests.get(db_url_tm)
 
 song_db    = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
 song_db_lg = json.loads(res_lg.text)
 song_db_st = json.loads(res_st.text)
 song_db_hd = json.loads(res_hd.text)
+song_db_tm = json.loads(res_tm.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -431,6 +434,36 @@ async def _slash_st_random(
         embed=discord.Embed(title="ランダム選曲(長複合難易度表)", color=0xff8080)
         embed.add_field(name="曲名", value=title, inline=False)
         embed.add_field(name="難易度", value="◆" + chlevel, inline=False)
+        embed.add_field(name="URL", value=url, inline=False)
+        await ctx.respond(embed=embed)
+
+@bot.slash_command(
+    name="random_tornament", 
+    description="大会IDを指定して1曲ランダムに表示します。"
+    )        
+async def _slash_random_tornament(
+    ctx, 
+    id: Option(str,"大会IDを指定します",required=True)
+    ):
+    error = False
+    fntournament = None
+    if id not in ["9_220722"]:
+        print('not defined')
+        embed_err=discord.Embed(title="エラー", description="指定された大会は存在しません。", color=0xff8080)
+        await ctx.respond(embed=embed_err, ephemeral=True)
+        error = True
+    else:
+        while fntournament != id:
+            #print('searching')
+            rnd = random.randrange(len(song_db_tm))
+            fntournament = song_db_tm[rnd]['tnmid'] 
+    if  error != True:
+        title = song_db[rnd]['title'].replace('_','\_')
+        chlevel = song_db[rnd]['level']
+        url = song_db[rnd]['url']
+        embed=discord.Embed(title="ランダム選曲(" + id + ")", color=0xff8080)
+        embed.add_field(name="曲名", value=title, inline=False)
+        embed.add_field(name="難易度", value="★" + chlevel, inline=False)
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
