@@ -18,7 +18,7 @@ db_url_sl = "https://script.google.com/macros/s/AKfycbxpDx-9KkQhuFHDbmfR75XtUFHr
 db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4HuRU25b5uUOmcoOaPtRfwWu8-MdksWDTZuWApprCTQ/exec"
 db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
 db_url_hd = "https://script.google.com/macros/s/AKfycbwxl8D7wKT341-3ZsQJ1XimVuHQRlYm9knjdqzR5YXdDpG4xjtVdOYGNst-yPMFN-za/exec"
-db_url_tm = "https://script.google.com/macros/s/AKfycby4K0rbZ_tgEGx1KdKMxclT4Ht9srpsbY-dM6WjYteLSYdTpNJPFFbMBj1Svm2wkY0/exec"
+db_url_tm = "https://script.google.com/macros/s/AKfycbyJTVJVjMsmIjA1W9LUEJBjx6myDFPZ0qspUtp57DRavT_0ZVzkewQyx2V4FSI1rAYJ/exec"
 
 res    = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
