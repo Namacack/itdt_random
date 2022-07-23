@@ -42,7 +42,7 @@ all_levels = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","
 
 all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRange(S-Random)","PlaySpeed(Hard)","JudgeRange(Hard)"]
 
-all_tournament = ["9_220723"]
+all_tournament = ["9_220723","9_220723_final"]
 
 dan_level = {
     "ビギナー":[0,0,0,1],
@@ -439,6 +439,7 @@ async def _slash_st_random(
         embed.add_field(name="URL", value=url, inline=False)
         await ctx.respond(embed=embed)
 
+#大会用
 @bot.slash_command(
     name="random_tournament", 
     description="大会IDを指定して1曲ランダムに表示します。"
@@ -547,14 +548,6 @@ async def _slash_hard_random(
     embed.add_field(name="難易度", value="★" + chlevel, inline=False)
     embed.add_field(name="URL", value=url, inline=False)
     await ctx.respond(embed=embed)
-
-# @bot.slash_command(name="final")
-# async def _slash_final(
-#     ctx,
-#     chart: Option(str,required=True)
-#     ):
-#     level = all_levels[random.randrange(len(all_levels))]
-#     await ctx.respond(f"{chart}は★{level}です。")
 
 @bot.event
 async def on_ready():
