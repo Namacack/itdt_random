@@ -42,7 +42,7 @@ all_levels = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","
 
 all_random_options = ["PlaySpeed(Easy)","Reg.Speed","PlaySpeed","JudgeRange","JudgeRange(S-Random)","PlaySpeed(Hard)","JudgeRange(Hard)"]
 
-all_tournament = ["9_220722"]
+all_tournament = ["9_220723"]
 
 dan_level = {
     "ビギナー":[0,0,0,1],
