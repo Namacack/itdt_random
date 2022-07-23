@@ -459,7 +459,7 @@ async def _slash_random_tournament(
         error = True
     else:
         while fntournament != id:
-            #print('searching')
+            print('searching')
             rnd = random.randrange(len(song_db_tm))
             fntournament = song_db_tm[rnd]['tnmid'] 
     if  error != True:
