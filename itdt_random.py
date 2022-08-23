@@ -19,6 +19,7 @@ db_url_lg = "https://script.google.com/macros/s/AKfycbw5CkdE-CoDZxDH7SJjLz0Pf4Hu
 db_url_st = "https://script.google.com/macros/s/AKfycbw-KA9EsIdYidNePnDzWYbsvpbDwSti3jRvJb0uhU7CZDJBzb229rGFxM1zmMRxKOC6sg/exec"
 db_url_hd = "https://script.google.com/macros/s/AKfycbwxl8D7wKT341-3ZsQJ1XimVuHQRlYm9knjdqzR5YXdDpG4xjtVdOYGNst-yPMFN-za/exec"
 db_url_tm = "https://script.google.com/macros/s/AKfycbyJTVJVjMsmIjA1W9LUEJBjx6myDFPZ0qspUtp57DRavT_0ZVzkewQyx2V4FSI1rAYJ/exec"
+db_url_ez = "https://script.google.com/macros/s/AKfycbxqsf6jTaRKbFtCIncHij2K0R-c9oysd2hJ-VtxJuqT_llTslKFtfeza0h5nQO1TBhz0Q/exec"
 
 res    = requests.get(db_url)
 res_sl = requests.get(db_url_sl)
@@ -26,6 +27,7 @@ res_lg = requests.get(db_url_lg)
 res_st = requests.get(db_url_st)
 res_hd = requests.get(db_url_hd)
 res_tm = requests.get(db_url_tm)
+res_ez = requests.get(db_url_ez)
 
 song_db    = json.loads(res.text)
 song_db_sl = json.loads(res_sl.text)
@@ -33,6 +35,7 @@ song_db_lg = json.loads(res_lg.text)
 song_db_st = json.loads(res_st.text)
 song_db_hd = json.loads(res_hd.text)
 song_db_tm = json.loads(res_tm.text)
+song_db_ez = json.loads(res_ez.text)
 
 TOKEN = 'OTg3MzI2MzY2MTA0MDQ3Njc2.GKXgG9.9ZrZQT__v9c9kgEFq_j8YK_OTamAwo4oOV4YVw'
 
@@ -543,6 +546,23 @@ async def _slash_hard_random(
     title = song_db_hd[rnd]['title'].replace('_','\_')
     chlevel = song_db_hd[rnd]['level']
     url = song_db_hd[rnd]['url']
+    embed=discord.Embed(title="ランダム選曲", color=0xff8080)
+    embed.add_field(name="曲名", value=title, inline=False)
+    embed.add_field(name="難易度", value="★" + chlevel, inline=False)
+    embed.add_field(name="URL", value=url, inline=False)
+    await ctx.respond(embed=embed)
+
+@bot.slash_command(
+    name="easy_random", 
+    description="易しい楽曲を1曲ランダムに表示します。"
+    )        
+async def _slash_easy_random(
+    ctx, 
+    ):
+    rnd = random.randrange(len(song_db_ez))
+    title = song_db_ez[rnd]['title'].replace('_','\_')
+    chlevel = song_db_ez[rnd]['level']
+    url = song_db_ez[rnd]['url']
     embed=discord.Embed(title="ランダム選曲", color=0xff8080)
     embed.add_field(name="曲名", value=title, inline=False)
     embed.add_field(name="難易度", value="★" + chlevel, inline=False)
