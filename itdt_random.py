@@ -517,7 +517,7 @@ async def _slash_exscore(
 
 @bot.slash_command(name="kill")
 async def _slash_kill(ctx):
-  await ctx.respond(f"{ctx.author}は奈落の底へ落ちた")
+  await ctx.respond(f"{ctx.name}は奈落の底へ落ちた")
 
 @bot.slash_command(name="gamerule")
 async def _slash_gamerule(
